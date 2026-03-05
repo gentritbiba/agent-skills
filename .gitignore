@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Keep these
+!.gitignore
+!README.md
+!LICENSE
+!gemini-image-gen/
+!gemini-image-gen/**
