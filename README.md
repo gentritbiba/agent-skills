@@ -10,15 +10,16 @@ A collection of skills for [Claude Code](https://docs.anthropic.com/en/docs/clau
 
 ## Installation
 
-Copy any skill folder into your Claude Code skills directory:
+Install any skill using the [Skills CLI](https://skills.sh/):
 
 ```bash
-# Copy a skill to your project
-cp -r gemini-image-gen /path/to/your/project/.claude/skills/
+# Install a specific skill
+npx skills add gentritbiba/agent-skills@gemini-image-gen
 
-# Or to your global skills
-cp -r gemini-image-gen ~/.claude/skills/
+# Install globally (no prompts)
+npx skills add gentritbiba/agent-skills@gemini-image-gen -g -y
 ```
+
 
 ## Contributing
 
