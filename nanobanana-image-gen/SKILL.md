@@ -21,7 +21,11 @@ NanoBanana generates raster images (PNG) by calling the Gemini REST API directly
 - `GEMINI_API_KEY` environment variable must be set
 - Get a key from https://aistudio.google.com/apikey if not set
 - `curl` available
-- One of: `node`/`bun`, `python3`, or `base64` CLI (for decoding)
+- One of: `node`/`bun`, `python3`, or `jq` + `base64` CLI (for decoding)
+
+## Platform Support
+
+Works on macOS, Linux, and Windows (Git Bash/WSL). Option 1 (node/bun) is the most portable — node runs identically everywhere. Option 3 (jq+base64) auto-detects the correct decode flag (`-d` vs `-D`) across platforms.
 
 ## Quick Reference
 
@@ -93,8 +97,9 @@ if echo "$RESPONSE" | jq -e '.error' >/dev/null 2>&1; then
   echo "$RESPONSE" | jq '.error'; exit 1
 fi
 
-# Extract and decode image
-echo "$RESPONSE" | jq -r '.candidates[0].content.parts[] | select(.inlineData) | .inlineData.data' | base64 -d > /tmp/[FILENAME].png
+# Extract and decode image (base64 -d on Linux/Git Bash, base64 -D on older macOS)
+B64_FLAG=$( (base64 -d /dev/null 2>/dev/null && echo "-d") || echo "-D" )
+echo "$RESPONSE" | jq -r '.candidates[0].content.parts[] | select(.inlineData) | .inlineData.data' | base64 $B64_FLAG > /tmp/[FILENAME].png
 echo "Image saved to /tmp/[FILENAME].png"
 
 # Print any text parts
